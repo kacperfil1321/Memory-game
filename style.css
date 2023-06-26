@@ -1,0 +1,197 @@
+body{
+    margin: 0;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
+#gameStartPanel{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    background-color: #152938;
+}
+
+#gameStartPanel svg path{
+    fill: #FCFCFC;
+}
+
+#gameStartPanel #panel{
+    width: 35%;
+    background-color: #FCFCFC;
+    border-radius: 20px;
+    padding: 40px;
+}
+
+#gameStartPanel #panel .title{
+    color: #7191A5;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#gameStartPanel #panel .choice{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#gameStartPanel #panel button{
+    width: 45%;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 0;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-weight: bold;
+    background-color: #BCCED9;
+    color: #FCFCFC;
+    font-size: 16px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+#gameStartPanel #panel button:hover{
+    background-color: #6395B8;
+    transition-duration: 0.3s;
+}
+
+#gameStartPanel #panel .active{
+    background-color: #304859 !important;
+}
+
+#gameStartPanel #panel .choice:nth-child(4) button{
+    width: 22.5%;
+}
+
+#gameStartPanel #panel #startGame{
+    width: 100%;
+    background-color: #FDA214;
+    font-size: 20px;
+    transition-duration: 0.3s;
+}
+
+#gameStartPanel #panel #startGame:hover{
+    opacity: 70%;
+    transition-duration: 0.3s;
+}
+
+#game{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#game #topBar{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#game #topBar img{
+    margin-left: 100px;
+}
+
+#game #topBar #gameOptions{
+    margin-right: 100px;
+}
+
+#game #topBar #gameOptions button{
+    border: none;
+    border-radius: 20px;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-weight: bold;
+    font-size: 17px;
+    padding: 8px 25px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+#game #topBar #gameOptions button:first-child{
+    color: #FCFCFC;
+    background-color: #FDA214;
+    margin-right: 10px;
+}
+
+#game #topBar #gameOptions button:first-child:hover{
+    opacity: 60%;
+    transition-duration: 0.3s;
+}
+
+#game #topBar #gameOptions button:last-child{
+    color: #152938;
+    background-color: #BCCED9;
+}
+
+#game #topBar #gameOptions button:last-child:hover{
+    color: #FCFCFC;
+    background-color: #6395B8;
+    transition-duration: 0.3s;
+}
+
+#game #gameContent{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#game #gameContent .row{
+    width: 100%;
+    height: calc(100% / 6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game #gameContent .row div{
+    aspect-ratio: 1 / 1;
+    height: calc(100% - 10px);
+    background-color: #DFE7EC;
+    border-radius: 50%;
+    margin: 5px;
+}
+
+#game #gameDetails{
+    width: 100%;
+    height: 20%;
+}
+
+#game #gameDetails #singlePlayer, #game #gameDetails #multiPlayer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game #gameDetails #singlePlayer .box{
+    width: 150px;
+    background-color: #DFE7EC;
+    color: #7191A5;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin: 0 10px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+#game #gameDetails #singlePlayer .box #time, #game #gameDetails #singlePlayer .box #moves{
+    color: #152938;
+    font-size: 20px;
+}
+
+#game #gameDetails #multiPlayer{
+    display: none;
+}
