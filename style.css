@@ -103,7 +103,7 @@ body{
     margin-right: 100px;
 }
 
-#game #topBar #gameOptions button{
+#game #topBar #gameOptions button, #game #endPanel #content #buttons button{
     border: none;
     border-radius: 20px;
     font-family: 'Atkinson Hyperlegible', sans-serif;
@@ -114,23 +114,23 @@ body{
     transition-duration: 0.3s;
 }
 
-#game #topBar #gameOptions button:first-child{
+#game #topBar #gameOptions button:first-child, #game #endPanel #content #buttons button:first-child{
     color: #FCFCFC;
     background-color: #FDA214;
     margin-right: 10px;
 }
 
-#game #topBar #gameOptions button:first-child:hover{
+#game #topBar #gameOptions button:first-child:hover, #game #endPanel #content #buttons button:first-child:hover{
     opacity: 60%;
     transition-duration: 0.3s;
 }
 
-#game #topBar #gameOptions button:last-child{
+#game #topBar #gameOptions button:last-child, #game #endPanel #content #buttons button:last-child{
     color: #152938;
     background-color: #BCCED9;
 }
 
-#game #topBar #gameOptions button:last-child:hover{
+#game #topBar #gameOptions button:last-child:hover, #game #endPanel #content #buttons button:last-child:hover{
     color: #FCFCFC;
     background-color: #6395B8;
     transition-duration: 0.3s;
@@ -153,9 +153,10 @@ body{
 }
 
 #game #gameContent .row .point{
+    position: relative;
     aspect-ratio: 1 / 1;
     height: calc(100% - 10px);
-    background-color: #BCCED9   ;
+    background-color: #BCCED9;
     border-radius: 50%;
     margin: 5px;
     display: flex;
@@ -164,6 +165,18 @@ body{
     font-weight: bold;
     color: white;
     font-size: 150%;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+#game #gameContent .row .point::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bgcolor, #304859);
+    border-radius: 50%;
+    transition-duration: 0.3s;
 }
 
 #game #gameDetails{
@@ -199,7 +212,7 @@ body{
 }
 
 #game #gameDetails #multiPlayer .turn{
-    display: none;
+    opacity: 0%;
     width: 100%;
     position: absolute;
     bottom: -25px;
@@ -209,19 +222,23 @@ body{
     text-transform: uppercase;
     letter-spacing: 4px;
     font-size: 10px;
+    transition-duration: 0.5s;
 }
 
 #game #gameDetails #multiPlayer .active{
     background-color: #FDA214;
     color: white;
+    transition-duration: 0.5s;
 }
 
 #game #gameDetails #multiPlayer .active .points{
     color: white;
+    transition-duration: 0.5s;
 }
 
 #game #gameDetails #multiPlayer .active > .turn{
-    display: block;
+    opacity: 100%;
+    transition-duration: 0.5s;
 }
 
 #game #gameDetails #multiPlayer .active::after{
@@ -233,4 +250,77 @@ body{
     width: 25px;
     height: 25px;
     background-color: #FDA214;
+    transition-duration: 0.5s;
+}
+
+#game #endPanel{
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+}
+
+#game #endPanel #content{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 40px;
+}
+
+#game #endPanel #content #mainText{
+    color: #152938;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#game #endPanel #content #text{
+    color: #7191A5;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+#game #endPanel #content #contentBox{
+    width: 100%;
+    font-weight: bold;
+}
+
+#game #endPanel #content #contentBox .box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #DFE7EC;
+    box-sizing: border-box;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#game #endPanel #content #contentBox .box .text{
+    color: #7191A5;
+    font-size: 15px;
+}
+
+#game #endPanel #content #contentBox .box .value{
+    font-size: 20px;
+    color: #304859;
+}
+
+#game #endPanel #content #contentBox .winner{
+    background-color: #152938;
+}
+
+#game #endPanel #content #contentBox .winner > .text, #game #endPanel #content #contentBox .winner > .value{
+    color: #FCFCFC;
+}
+
+#game #endPanel #content #buttons{
+    margin-top: 30px;
 }

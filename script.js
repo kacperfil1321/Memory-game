@@ -16,6 +16,8 @@ function startPanel(x, y){
     document.getElementsByClassName('choice')[x].getElementsByTagName('button')[y].classList.add('active');
 }
 
+var timer;
+
 document.getElementById('startGame').addEventListener('click', function (){
     //Number of players
     if(players == 0){
@@ -52,10 +54,12 @@ document.getElementById('startGame').addEventListener('click', function (){
         size = 6;
     }
     var gameContent = '';
+    var k = 0;
     for(var i = 0; i < size; i++){
         gameContent = gameContent + '<div class="row">';
         for(var j = 0; j < size; j++){
-            gameContent = gameContent + '<div class="point"></div>';
+            gameContent = gameContent + '<div class="point" onclick="pointCheck(' + k + ')"></div>';
+            k++;
         }
         gameContent = gameContent + '</div>';
     }
@@ -150,4 +154,130 @@ document.getElementById('startGame').addEventListener('click', function (){
             point[i].innerHTML = icon;
         }
     }
+    //Time start
+    var time = 0, m, s;
+    timer = setInterval(function (){
+        time = time + 1;
+        s = time % 60;
+        if(s < 10){
+            s = '0' + s;
+        }
+        m = Math.floor(time / 60);
+        document.getElementById('time').innerText = m + ':' + s;
+    }, 1000);
 });
+
+var guessed = [], first = -1, firstId, secondId, ready = 1, moves = 0, turn = 0;
+var points = [0, 0, 0, 0];
+var point = document.getElementsByClassName('point');
+
+function pointCheck(x){
+    if(!guessed.includes(point[x].innerHTML) && ready == 1 && firstId != x){
+        point[x].style.setProperty('--bgcolor', 'transparent');
+        point[x].style.backgroundColor = '#FDA214';
+
+        if(first == -1){
+            first = point[x].innerHTML;
+            firstId = x;
+        }
+        else{
+            ready = 0;
+            secondId = x;
+
+            if(first == point[x].innerHTML){
+                guessed.push(point[x].innerHTML);
+                points[turn]++;
+                document.getElementById('multiPlayer').getElementsByClassName('points')[turn].innerText = points[turn];
+                if(guessed.length == point.length / 2){
+                    //end game
+                    clearInterval(timer);
+                    document.getElementById('endPanel').style.display = 'flex';
+                    if(players == 0){
+                        document.getElementById('mainText').innerText = 'You did it!';
+                        document.getElementById('text').innerText = "Game over! Here's how you got on...";
+                        document.getElementById('contentBox').innerHTML = '' +
+                        '<div class="box">' +
+                            '<div class="text">Time Elapsed</div>' +
+                            '<div class="value">' + document.getElementById('time').innerText + '</div>' +
+                        '</div>' +
+                        '<div class="box">' +
+                            '<div class="text">Moves Taken</div>' +
+                            '<div class="value">' + (moves + 1) + '</div>' +
+                        '</div>';
+                    }
+                    else{
+                        var max = Math.max(...points), winner = 0, winnerId;
+                        
+                        document.getElementById('contentBox').innerHTML = '';
+                        for(var i = 0; i < players + 1; i++){
+                            if(points[i] == max){
+                                document.getElementById('contentBox').innerHTML += '' +
+                                '<div class="box winner">' +
+                                    '<div class="text">Player ' + (i + 1) + ' (Winner!)</div>' +
+                                    '<div class="value">' + points[i] + ' Pairs</div>' +
+                                '</div>';
+                                winner++;
+                                winnerId = i + 1;
+                            }
+                            else{
+                                document.getElementById('contentBox').innerHTML += '' +
+                                '<div class="box">' +
+                                    '<div class="text">Player ' + (i + 1) + '</div>' +
+                                    '<div class="value">' + points[i] + ' Pairs</div>' +
+                                '</div>';
+                            }
+                        }
+
+                        if(winner > 1){
+                            document.getElementById('mainText').innerText = "It's a tie!";
+                        }
+                        else{
+                            document.getElementById('mainText').innerText = "Player " + winnerId + " Wins!";
+                        }
+                        document.getElementById('text').innerText = "Game over! Here are the results...";
+
+                        var box = document.getElementById('contentBox').getElementsByClassName('box');
+
+                        for(var i = 0; i < box.length - 1; i++){
+                            for(var j = 0; j < box.length - 1; j++){
+                                if(parseInt(box[j].getElementsByClassName('value')[0].innerText) < parseInt(box[j + 1].getElementsByClassName('value')[0].innerText)){
+                                    var temp = box[j].outerHTML;
+                                    box[j].outerHTML = box[j + 1].outerHTML;
+                                    box[j + 1].outerHTML = temp;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else{
+                setTimeout(function (){
+                    point[firstId].style.setProperty('--bgcolor', '#304859');
+                    point[secondId].style.setProperty('--bgcolor', '#304859');
+                }, 500);
+            }
+
+            setTimeout(function (){
+                point[firstId].style.backgroundColor = '#BCCED9';
+                point[secondId].style.backgroundColor = '#BCCED9';
+                ready = 1;
+                firstId = -1;
+            }, 500);
+
+            if(players == 0){
+                moves++;
+                document.getElementById('moves').innerText = moves;
+            }
+            else{
+                turn++;
+                if(turn == players + 1){
+                    turn = 0;
+                }
+                document.getElementById('multiPlayer').getElementsByClassName('active')[0].classList.remove('active');
+                document.getElementById('multiPlayer').getElementsByClassName('box')[turn].classList.add('active');
+            }
+
+            first = -1;
+        }
+    }
+}
